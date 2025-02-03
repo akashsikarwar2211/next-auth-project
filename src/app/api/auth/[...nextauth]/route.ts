@@ -1,19 +1,10 @@
-import NextAuth, { DefaultSession, User } from "next-auth"
+import NextAuth, { User } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
+import { Session } from "./Session"
 
 const prisma = new PrismaClient()
-
-// Extend the DefaultSession type
-interface Session extends DefaultSession {
-  user: {
-    id: string; // Add the id property
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-  }
-}
 
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
